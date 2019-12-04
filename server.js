@@ -19,7 +19,7 @@ settings.game,
 );
 
 client.on("message", async message => {
-  const prefixes = ["bd!", "BD!", "Bd!", "bD!", "<@+settings.botID+>"];
+  const prefixes = ["bd!", "BD!", "Bd!", "bD!", "<@+client.user.id+>"];
   let prefix = false;
   for (const thisPrefix of prefixes) {
     if (message.content.startsWith(thisPrefix)) prefix = thisPrefix;
