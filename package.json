@@ -2,12 +2,14 @@
   "name": "bday-bot",
   "version": "0.0.1",
   "description": "An open source discord bot for remembering birthdays and announcing them",
-  "main": "server.js",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "node server.js"
+    "start": "node src/index.ts"
   },
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "@types/node": "^12.12.14",
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0"
   },
   "repository": {
     "type": "git",
