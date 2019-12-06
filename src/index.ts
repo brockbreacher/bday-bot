@@ -1,12 +1,18 @@
 import { Client } from "discord.js";
-import { CommandHandler } from "./cmd/CommandHandler";
 import { Config } from "./Config";
+import { CommandHandler } from "./cmd/CommandHandler";
+import { ActivityHandler } from "./activity/ActivityHandler";
 
 const client = new Client();
-const handler = new CommandHandler(client);
+const commandHandler = new CommandHandler(client);
+const activityHandler = new ActivityHandler(client);
 
 client.on("message", async message => {
-	await handler.process(message);
+	await commandHandler.process(message);
+});
+
+client.on("ready", () => {
+	activityHandler.start(5000);
 });
 
 client.login(Config.getValue("token"));
