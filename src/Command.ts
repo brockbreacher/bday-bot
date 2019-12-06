@@ -3,18 +3,16 @@ import { Client, Message } from "discord.js";
 export abstract class Command {
 	name: string = "";
 
-	abstract async run(client: Client): Promise<void>;
+	constructor(readonly client: Client, readonly args: string[], readonly message: Message) {}
+
+	abstract async run(): Promise<void>;
 }
 
 
 export class PingCommand extends Command {
 	name: string = "ping";
 
-	constructor(readonly args: string[], readonly message: Message) {
-		super();
-	}
-
-	async run(client: Client): Promise<void> {
+	async run(): Promise<void> {
 		await this.message.channel.send("Ping!");
 	}
 }
