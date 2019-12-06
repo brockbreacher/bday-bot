@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { CommandHandler } from "./CommandHandler";
+import { CommandHandler } from "./cmd/CommandHandler";
 import { Config } from "./Config";
 
 const client = new Client();

@@ -1,6 +1,7 @@
 import { Client, Message } from "discord.js";
-import { Config } from "./Config";
-import { Command, PingCommand } from "./Command";
+import { Config } from "../Config";
+import { Command} from "./Command";
+import { PingCommand } from "./cmds/PingCommand";
 
 export class CommandFactory {
 	constructor(readonly client: Client) {}
