@@ -13,12 +13,12 @@ export class CommandHandler {
 		const command = this.factory.create(message);
 		if (command === null) return;
 
-		console.log(`Running ${command.name}!`);
+		console.log(`Running ${command.identifier}!`);
 		try {
 			await command.run();
-			console.log(`Ran ${command.name}!`);
+			console.log(`Ran ${command.identifier}!`);
 		} catch (e) {
-			console.log(`Error running ${command.name}: ${e}`);
+			console.log(`Error running ${command.identifier}: ${e}`);
 		}
 	}
 }
