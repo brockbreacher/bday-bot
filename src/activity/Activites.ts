@@ -1,19 +1,8 @@
 import { Client } from "discord.js";
+import { ThunkedIterator } from "../util/ThunkedIterator";
 
-export class Activities {
-	readonly activities = Activities.cycleThunk([() => "bd!", () => `in ${this.client.guilds.size} guilds`]);
-
-	constructor(readonly client: Client) {}
-
-	next(): IteratorResult<string> {
-		return this.activities.next();
+export class Activities extends ThunkedIterator<string> {
+	constructor(readonly client: Client) {
+		super([() => "bd!", () => `in ${this.client.guilds.size} guilds`]);
 	}
-
-	private static* cycleThunk<T>(arr: Array<(() => T)>): Generator<T, void, void> {
-		while (true) {
-			for (const item of arr) {
-				yield item();
-			}
-		}
-	};
 }
