@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { Activities } from "./Activites";
+import { Activities } from "./Activities";
 
 export class ActivityHandler {
 	readonly activities = new Activities(this.client);
@@ -8,8 +8,8 @@ export class ActivityHandler {
 
 	start(interval: number) {
 		this.client.setInterval(() => {
-			this.client.user.setActivity(this.activities.next().value)
-		}, interval)
+			this.client.user.setActivity(this.activities.next().value);
+		}, interval);
 	}
 }
 

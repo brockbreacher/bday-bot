@@ -16,7 +16,7 @@ export class CommandHandler {
 		console.log(`Running ${command.name}!`);
 		try {
 			await command.run();
-			console.log(`Ran ${command.name}!`)
+			console.log(`Ran ${command.name}!`);
 		} catch (e) {
 			console.log(`Error running ${command.name}: ${e}`);
 		}
