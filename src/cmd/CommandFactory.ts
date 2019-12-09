@@ -1,5 +1,5 @@
 import { Client, Message } from "discord.js";
-import { Config } from "../Config";
+import { Config } from "../util/Config";
 import { Command } from "./Command";
 import * as commands from "./cmds";
 
