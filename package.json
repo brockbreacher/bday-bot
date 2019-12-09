@@ -12,7 +12,10 @@
   "dependencies": {
     "@types/node": "^12.12.14",
     "discord.js": "^11.5.1",
-    "dotenv": "^8.2.0"
+    "dotenv": "^8.2.0",
+    "pg": "^7.14.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.21"
   },
   "repository": {
     "type": "git",
