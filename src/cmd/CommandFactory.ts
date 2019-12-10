@@ -12,9 +12,6 @@ export class CommandFactory {
 		if (!prefix) return null;
 
 		const [command, ...args] = content.slice(prefix.length).trim().split(/ +/);
-		console.log(command);
-		console.log(Object.values(commands).map(x => x.name));
-
 		const CommandClass = Object.values(commands).find(x => x.identifier === command);
 		if (!CommandClass) return null;
 

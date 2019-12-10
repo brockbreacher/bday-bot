@@ -3,10 +3,10 @@ import { Column, Entity, PrimaryColumn } from "typeorm";
 @Entity()
 export class User {
 	@PrimaryColumn({ length: 18 })
-	// @ts-ignore
+		// @ts-ignore
 	id: string;
 
 	@Column()
-	// @ts-ignore
+		// @ts-ignore
 	birthday: Date;
 }

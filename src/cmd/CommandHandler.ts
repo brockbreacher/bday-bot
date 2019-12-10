@@ -3,6 +3,7 @@ import { CommandFactory } from "./CommandFactory";
 
 export class CommandHandler {
 	factory: CommandFactory;
+
 	constructor(readonly client: Client) {
 		this.factory = new CommandFactory(client);
 	}
