@@ -1,5 +1,5 @@
 import { Client } from "discord.js";
-import { Activities } from "./Activities";
+import { Activities } from "../activity/Activities";
 
 export class ActivityHandler {
 	readonly activities = new Activities(this.client);

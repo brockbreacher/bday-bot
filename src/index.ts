@@ -1,7 +1,6 @@
 import { Client } from "discord.js";
 import { Config } from "./util/Config";
-import { CommandHandler } from "./cmd/CommandHandler";
-import { ActivityHandler } from "./activity/ActivityHandler";
+import { ActivityHandler, CommandHandler } from "./handlers/";
 
 const client = new Client();
 const commandHandler = new CommandHandler(client);
