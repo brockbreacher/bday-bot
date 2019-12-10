@@ -1,14 +1,14 @@
-import { Database } from "../../database/Database";
-import { Command } from "../Command";
+import { getCustomRepository } from "typeorm";
 import { Message } from "discord.js";
-import { User } from "../../database/entity/User";
+import { Command } from "../Command";
+import { UserRepository } from "../../database/repository";
+import { User } from "../../database/entity";
 
 export class SetBdayCommand extends Command {
 	static readonly identifier = "setbirthday";
 
 	async run(): Promise<void> {
-		const connection = await Database.getConnection();
-
+		const userRepository = getCustomRepository(UserRepository);
 		await this.message.channel.send("Please input your birthday in the format `DD/MM/YYYY`");
 		const filter = (m: Message) => m.author.id === this.message.author.id;
 		const responses = await this.message.channel.awaitMessages(filter, { max: 1, time: 10000 });
@@ -22,8 +22,8 @@ export class SetBdayCommand extends Command {
 		let user = new User();
 		user.id = this.message.author.id;
 		user.birthday = new Date(year, month - 1, day); // month is zero-indexed
-		const newUser = await connection.manager.save(user);
-		await this.message.channel.send(`Saved user: ${newUser.id}`);
+		const savedUser = await userRepository.save(user);
+		await this.message.channel.send(`Saved user ${savedUser.id}`);
 	}
 }
 

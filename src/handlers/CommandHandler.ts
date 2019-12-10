@@ -2,11 +2,9 @@ import { Client, Message } from "discord.js";
 import { CommandFactory } from "../cmd/CommandFactory";
 
 export class CommandHandler {
-	factory: CommandFactory;
+	factory = new CommandFactory(this.client);
 
-	constructor(readonly client: Client) {
-		this.factory = new CommandFactory(client);
-	}
+	constructor(readonly client: Client) {}
 
 	async process(message: Message): Promise<void> {
 		if (message.author.bot) return;

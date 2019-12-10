@@ -1,10 +1,10 @@
 import "reflect-metadata";
 import { Connection, createConnection } from "typeorm";
 import { Config } from "../util/Config";
-import { User } from "./entity/User";
+import * as entities from "./entity";
 
-export class Database {
-	private static instance: Database;
+export class DatabaseManager {
+	private static instance: DatabaseManager;
 	private connection: Promise<Connection>;
 
 	private constructor() {
@@ -15,22 +15,20 @@ export class Database {
 			username: Config.getValue("db_username"),
 			password: Config.getValue("db_password"),
 			database: Config.getValue("db_database"),
-			entities: [
-				User
-			],
+			entities: Object.values(entities),
 			synchronize: true,
 			logging: false
 		});
 	}
 
 	public static getInstance() {
-		if (!Database.instance) {
-			Database.instance = new Database();
+		if (!DatabaseManager.instance) {
+			DatabaseManager.instance = new DatabaseManager();
 		}
-		return Database.instance;
+		return DatabaseManager.instance;
 	}
 
 	public static getConnection(): Promise<Connection> {
-		return Database.getInstance().connection;
+		return DatabaseManager.getInstance().connection;
 	}
 }
