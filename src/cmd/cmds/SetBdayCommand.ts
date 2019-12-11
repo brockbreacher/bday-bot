@@ -3,6 +3,7 @@ import { Message } from "discord.js";
 import { Command } from "../Command";
 import { UserRepository } from "../../database/repository";
 import { User } from "../../database/entity";
+import { Util } from "../../util/Util"
 
 export class SetBdayCommand extends Command {
 	static readonly identifier = "setbirthday";
@@ -22,6 +23,8 @@ export class SetBdayCommand extends Command {
 		const match = input.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
 		if (!match) return void await this.message.reply("the date should be in `DD/MM/YYYY` format.");
 		const [day, month, year] = match.slice(1, 4).map(x => parseInt(x));
+		if (!Util.validateDate(day, month, year))
+			return void await this.message.reply("that is not a valid date in `DD/MM/YYYY` format.");
 
 		let user = new User();
 		user.id = this.message.author.id;
