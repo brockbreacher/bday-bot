@@ -5,7 +5,8 @@ import { EntityRepository, Repository } from "typeorm";
 export class UserRepository extends Repository<User> {
 	findByBirthday(day: number, month: number) {
 		return this.createQueryBuilder("user")
-			.where("EXTRACT(DAY FROM :date)", { day, month })
+			.where("EXTRACT (DAY FROM user.birthday) = :day", { day, month })
+			.andWhere("EXTRACT (MONTH FROM user.birthday) = :month", { day, month })
 			.getMany();
 	}
 }
