@@ -4,7 +4,7 @@ export class Util {
 		if (year < 0) return false;
 
 		// Validate months
-		if (month < 1 && month > 12) return false;
+		if (month < 1 || month > 12) return false;
 
 		// Validate days
 		if (day < 1) return false;
