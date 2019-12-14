@@ -11,7 +11,7 @@ export class DatabaseManager {
 		this.connection = createConnection({
 			type: "postgres",
 			host: Config.getValue("db_host"),
-			port: parseInt(Config.getValue("db_port")),
+			port: parseInt(Config.getValue("db_port"), 10), // parseInt radix
 			username: Config.getValue("db_username"),
 			password: Config.getValue("db_password"),
 			database: Config.getValue("db_database"),
