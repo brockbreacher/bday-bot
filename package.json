@@ -1,13 +1,23 @@
 {
   "name": "bday-bot",
-  "version": "0.0.1",
+  "version": "0.1.0",
   "description": "An open source discord bot for remembering birthdays and announcing them",
-  "main": "server.js",
+  "main": "src/index.ts",
   "scripts": {
-    "start": "node server.js"
+    "clean": "rm -rf target",
+    "compile": "tsc -p .",
+    "execute": "node target/index.js",
+    "generate-env": "node bin/generate-env.js",
+    "start": "yarn clean && yarn compile && yarn execute",
+    "postinstall": "yarn generate-env"
   },
   "dependencies": {
-    "discord.js": "^11.5.1"
+    "@types/node": "^12.12.14",
+    "discord.js": "^11.5.1",
+    "dotenv": "^8.2.0",
+    "pg": "^7.14.0",
+    "reflect-metadata": "^0.1.13",
+    "typeorm": "^0.2.21"
   },
   "repository": {
     "type": "git",
