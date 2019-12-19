@@ -1,5 +1,5 @@
 import { getCustomRepository } from "typeorm";
-import { Message } from "discord.js";
+import { Message, RichEmbed, TextChannel, User as DiscordUser } from "discord.js";
 import { Command } from "../Command";
 import { UserRepository } from "../../database/repository";
 import { User } from "../../database/entity";
@@ -11,28 +11,47 @@ export class SetBdayCommand extends Command {
 	async run() {
 		const userRepository = getCustomRepository(UserRepository);
 
-		let input = this.args[0];
+		const promptEmbed = new RichEmbed().setTitle("Setting Birthday...").setDescription("Please enter your birthday below in `DD/MM/YYYY` format:\ne.g. `12/03/2004` <- 12th of March 2004").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
+		const input = await this.promptMessage(promptEmbed, this.message.channel as TextChannel, this.message.author);
+		console.log(input);
 		if (!input) {
-			await this.message.channel.send("Please input your birthday below, in the `DD/MM/YYYY` format.");
-			const filter = (m: Message) => m.author.id === this.message.author.id;
-			const responses = await this.message.channel.awaitMessages(filter, { max: 1, time: 30000 });
-			if (!responses.size) return void await this.message.reply("command timed out.");
-			input = responses.first().content;
+			const errorEmbed = new RichEmbed().setTitle("Prompt timeout").setDescription("You waited too long. Command cancelled!").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
+			return await this.message.channel.send(errorEmbed);
 		}
 
-		const match = input.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
-		if (!match) return void await this.message.reply("the date should be in `DD/MM/YYYY` format.");
-		const [day, month, year] = match.slice(1, 4).map(x => parseInt(x, 10)); // parseInt radix
-		if (!validateDate(day, month, year))
-			return void await this.message.reply("that is not a valid date in `DD/MM/YYYY` format.");
+		const dateArray = this.parseInput(input);
+		if (!dateArray) {
+			const errorEmbed = new RichEmbed().setTitle("Invalid input").setDescription("That was not a valid date in `DD/MM/YYYY` format, Command cancelled!").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
+			return this.message.channel.send(errorEmbed);
+		}
+		const [day, month, year] = dateArray;
 
-		let user = new User();
-		user.id = this.message.author.id;
-		user.birthday = new Date(year, month - 1, day); // month is zero-indexed
-		const savedUser = await userRepository.save(user);
-		await this.message.channel.send(`Saved user ${savedUser.id}`);
-		const results = await userRepository.findByBirthday(day, month);
-		await this.message.channel.send(`Others with the same birthday: ${results.map(x => this.client.users.get(x.id))}`)
+		const user = User.create({
+			id: this.message.author.id,
+			birthday: new Date(year, month - 1, day) // month is zero-indexed
+		});
+		await userRepository.save(user);
+
+		const embed = new RichEmbed().setTitle("Birthday Set Successfully").setDescription(`Your birthday has been set successfully.`).setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(58390).setTimestamp();
+		await this.message.channel.send(embed);
+	}
+
+	private async promptMessage(content: string | RichEmbed, channel: TextChannel, user: DiscordUser) {
+		await channel.send(content);
+		const filter = (m: Message) => m.author.id === user.id;
+		const responses = await channel.awaitMessages(filter, { max: 1, time: 30_000 });
+		if (!responses.size) return null;
+		return responses.first().content;
+	}
+
+	private parseInput(input: string) {
+		const dateArray = input
+			.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)
+			?.slice(1, 4)
+			.map(x => parseInt(x, 10));
+
+		if (!dateArray) return null;
+		return (validateDate as any)(...dateArray) ? dateArray : null;
 	}
 }
 
