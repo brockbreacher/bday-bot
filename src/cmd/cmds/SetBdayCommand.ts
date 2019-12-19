@@ -8,7 +8,7 @@ import { validateDate } from "../../util/Util"
 export class SetBdayCommand extends Command {
 	static readonly identifier = "setbirthday";
 
-	async run(): Promise<void> {
+	async run() {
 		const userRepository = getCustomRepository(UserRepository);
 
 		let input = this.args[0];

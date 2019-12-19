@@ -6,7 +6,7 @@ export abstract class Command {
 
 	constructor(readonly client: Client, readonly args: string[], readonly message: Message) {}
 
-	abstract async run(): Promise<void>;
+	abstract async run(): Promise<any>;
 }
 
 
