@@ -1,9 +1,7 @@
 export function setIntervalAtTime(callback: () => void, time: Date) {
 	const now = new Date();
 	time.setUTCFullYear(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-	console.log(time.getTime(), now.getTime(), time.getTime() - now.getTime());
 	if (time.getTime() < now.getTime()) time.setUTCDate(time.getUTCDate() + 1);
-	console.log(time.getTime(), now.getTime(), time.getTime() - now.getTime());
 	setTimeout(() => {
 		setInterval(callback, 24 * 60 * 60 * 1000);
 		callback();
