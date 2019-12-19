@@ -7,4 +7,11 @@ export class Guild {
 
 	@Column({ length: 18 })
 	announcementChannel!: string;
+
+	static create({id, announcementChannel}: { id: string, announcementChannel: string }) {
+		const guild = new Guild();
+		guild.id = id;
+		guild.announcementChannel = announcementChannel;
+		return guild;
+	}
 }

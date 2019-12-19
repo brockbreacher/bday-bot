@@ -7,4 +7,11 @@ export class User {
 
 	@Column()
 	birthday!: Date;
+
+	static create({ id, birthday }: { id: string, birthday: Date }) {
+		const user = new User();
+		user.id = id;
+		user.birthday = birthday;
+		return user;
+	}
 }
