@@ -1,6 +1,6 @@
 import { Client } from "discord.js";
 import { Config } from "./util/Config";
-import { ActivityHandler, CommandHandler } from "./handlers/";
+import { ActivityHandler, AnnouncementHandler, CommandHandler } from "./handlers/";
 import { DatabaseManager } from "./database";
 
 (async () => {
@@ -8,6 +8,7 @@ import { DatabaseManager } from "./database";
 	const client = new Client();
 	const commandHandler = new CommandHandler(client);
 	const activityHandler = new ActivityHandler(client);
+	const announcementHandler = new AnnouncementHandler(client);
 
 	client.on("message", async message => {
 		await commandHandler.process(message);
@@ -15,6 +16,7 @@ import { DatabaseManager } from "./database";
 
 	client.on("ready", () => {
 		activityHandler.start(5000);
+		announcementHandler.start(new Date(Date.UTC(0,0,0,0,0,0,0)));
 	});
 
 	await client.login(Config.getValue("token"));

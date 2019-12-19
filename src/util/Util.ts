@@ -1,29 +1,39 @@
-export class Util {
-	static validateDate(day: number, month: number, year: number) {
-		// Validate years
-		if (year < 0) return false;
+export function setIntervalAtTime(callback: () => void, time: Date) {
+	const now = new Date();
+	time.setUTCFullYear(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+	console.log(time.getTime(), now.getTime(), time.getTime() - now.getTime());
+	if (time.getTime() < now.getTime()) time.setUTCDate(time.getUTCDate() + 1);
+	console.log(time.getTime(), now.getTime(), time.getTime() - now.getTime());
+	setTimeout(() => {
+		setInterval(callback, 24 * 60 * 60 * 1000);
+		callback();
+	}, time.getTime() - now.getTime());
+}
 
-		// Validate months
-		if (month < 1 || month > 12) return false;
+export function validateDate(day: number, month: number, year: number) {
+	// Validate years
+	if (year < 0) return false;
 
-		// Validate days
-		if (day < 1) return false;
+	// Validate months
+	if (month < 1 || month > 12) return false;
 
-		//  31 vs 30 day months
-		if ([1, 3, 5, 7, 8, 10, 12].includes(month))
-			if (day > 31) return false;
+	// Validate days
+	if (day < 1) return false;
 
-		if ([4, 6, 9, 11].includes(month))
-			if (day > 30) return false;
+	//  31 vs 30 day months
+	if ([1, 3, 5, 7, 8, 10, 12].includes(month))
+		if (day > 31) return false;
 
-		// February and leap year stuff
-		if (year % 4 === 0) {
+	if ([4, 6, 9, 11].includes(month))
+		if (day > 30) return false;
 
-			if (day > 29) return false;
-		} else {
-			if (day > 28) return false;
-		}
+	// February and leap year stuff
+	if (year % 4 === 0) {
 
-		return true;
+		if (day > 29) return false;
+	} else {
+		if (day > 28) return false;
 	}
+
+	return true;
 }

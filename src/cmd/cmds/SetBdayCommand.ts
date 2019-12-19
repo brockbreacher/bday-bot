@@ -3,7 +3,7 @@ import { Message } from "discord.js";
 import { Command } from "../Command";
 import { UserRepository } from "../../database/repository";
 import { User } from "../../database/entity";
-import { Util } from "../../util/Util"
+import { validateDate } from "../../util/Util"
 
 export class SetBdayCommand extends Command {
 	static readonly identifier = "setbirthday";
@@ -15,15 +15,15 @@ export class SetBdayCommand extends Command {
 		if (!input) {
 			await this.message.channel.send("Please input your birthday below, in the `DD/MM/YYYY` format.");
 			const filter = (m: Message) => m.author.id === this.message.author.id;
-			const responses = await this.message.channel.awaitMessages(filter, { max: 1, time: 10000 });
-			if (!responses.size) return;
+			const responses = await this.message.channel.awaitMessages(filter, { max: 1, time: 30000 });
+			if (!responses.size) return void await this.message.reply("command timed out.");
 			input = responses.first().content;
 		}
 
 		const match = input.match(/^(\d{2})\/(\d{2})\/(\d{4})$/);
 		if (!match) return void await this.message.reply("the date should be in `DD/MM/YYYY` format.");
 		const [day, month, year] = match.slice(1, 4).map(x => parseInt(x, 10)); // parseInt radix
-		if (!Util.validateDate(day, month, year))
+		if (!validateDate(day, month, year))
 			return void await this.message.reply("that is not a valid date in `DD/MM/YYYY` format.");
 
 		let user = new User();
