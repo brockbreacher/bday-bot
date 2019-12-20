@@ -11,9 +11,8 @@ export class SetBdayCommand extends Command {
 	async run() {
 		const userRepository = getCustomRepository(UserRepository);
 
-		const promptEmbed = new RichEmbed().setTitle("Setting Birthday...").setDescription("Please enter your birthday below in `DD/MM/YYYY` format:\ne.g. `12/03/2004` <- 12th of March 2004").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
+		const promptEmbed = new RichEmbed().setTitle("Setting Birthday...").setDescription("Please enter your birthday below in `DD/MM/YYYY` format:\ne.g. `12/03/2004` <- 12th of March 2004").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753920).setTimestamp();
 		const input = await this.promptMessage(promptEmbed, this.message.channel as TextChannel, this.message.author);
-		console.log(input);
 		if (!input) {
 			const errorEmbed = new RichEmbed().setTitle("Prompt timeout").setDescription("You waited too long. Command cancelled!").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
 			return await this.message.channel.send(errorEmbed);

@@ -5,7 +5,7 @@ export class PingCommand extends Command {
 	static readonly identifier = "ping";
 
 	async run() {
-		const embed = new RichEmbed().setTitle("Ping").setDescription("Pinging server...").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
+		const embed = new RichEmbed().setTitle("Ping").setDescription("Pinging server...").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753920).setTimestamp();
 		const newMessage = await this.message.channel.send(embed) as Message;
 
 		const pingDelay = newMessage.createdTimestamp - this.message.createdTimestamp;
