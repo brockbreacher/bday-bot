@@ -8,7 +8,7 @@ export class ActivityHandler {
 
 	start(interval: number) {
 		this.client.setInterval(() => {
-			this.client.user.setActivity(this.activities.next().value);
+			this.client.user.setActivity(this.activities.next().value, { type: "WATCHING" });
 		}, interval);
 	}
 }
