@@ -3,6 +3,7 @@ import { Command } from "../Command";
 
 export class PingCommand extends Command {
 	static readonly identifier = "ping";
+	static readonly description = "Checks the bot's ping";
 
 	async run() {
 		const embed = new RichEmbed().setTitle("Ping").setDescription("Pinging server...").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753920).setTimestamp();

@@ -5,6 +5,7 @@ import { getRepository } from "typeorm";
 
 export class SetupGuild extends Command {
 	static readonly identifier = "setupguild";
+	static readonly description = "Set up a guild for use with Bday-Bot";
 
 	async run() {
 		const repository = getRepository(Guild);

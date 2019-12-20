@@ -3,6 +3,7 @@ import * as commands from "./";
 
 export class HelpCommand extends Command {
 	static readonly identifier = "help";
+	static readonly description = "Shows you this help page";
 
 	async run() {
 		const commandNames = Object.values(commands).map(x => x.identifier);
