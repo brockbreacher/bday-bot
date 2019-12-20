@@ -15,7 +15,7 @@ import { DatabaseManager } from "./database";
 	});
 
 	client.on("ready", () => {
-		activityHandler.start(5000);
+		activityHandler.start(60_000);
 		announcementHandler.start(new Date(Date.UTC(0,0,0,0,0,0,0)));
 	});
 
