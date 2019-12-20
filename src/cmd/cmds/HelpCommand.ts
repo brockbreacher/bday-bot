@@ -1,12 +1,22 @@
-import { Command } from "../Command";
+import { RichEmbed } from "discord.js";
 import * as commands from "./";
+import { Command } from "../Command";
+import { Config } from "../../util/Config";
 
 export class HelpCommand extends Command {
 	static readonly identifier = "help";
 	static readonly description = "Shows you this help page";
 
 	async run() {
-		const commandNames = Object.values(commands).map(x => x.identifier);
-		await this.message.channel.send(`Here are my commands: ${commandNames.map(x => `\`${x}\``).join(", ")}.`);
+		const prefix = Config.getValue("prefix");
+		const embed = new RichEmbed()
+			.setTitle("Help and Commands")
+			.setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL)
+			.setColor(16753919);
+
+		for (const command of Object.values(commands)) {
+			embed.addField(`**${prefix}${command.identifier}**`, command.description);
+		}
+		await this.message.channel.send(embed);
 	}
 }
