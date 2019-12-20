@@ -12,11 +12,14 @@ export class SetBdayCommand extends Command {
 	async run() {
 		const userRepository = getCustomRepository(UserRepository);
 
-		const promptEmbed = new RichEmbed().setTitle("Setting Birthday...").setDescription("Please enter your birthday below in `DD/MM/YYYY` format:\ne.g. `12/03/2004` <- 12th of March 2004").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753920).setTimestamp();
-		const input = await this.promptMessage(promptEmbed, this.message.channel as TextChannel, this.message.author);
+		let input: string | null = this.args[0] ?? null;
 		if (!input) {
-			const errorEmbed = new RichEmbed().setTitle("Prompt timeout").setDescription("You waited too long. Command cancelled!").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
-			return await this.message.channel.send(errorEmbed);
+			const promptEmbed = new RichEmbed().setTitle("Setting Birthday...").setDescription("Please enter your birthday below in `DD/MM/YYYY` format:\ne.g. `12/03/2004` <- 12th of March 2004").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753920).setTimestamp();
+			input = await this.promptMessage(promptEmbed, this.message.channel as TextChannel, this.message.author);
+			if (!input) {
+				const errorEmbed = new RichEmbed().setTitle("Prompt timeout").setDescription("You waited too long. Command cancelled!").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
+				return await this.message.channel.send(errorEmbed);
+			}
 		}
 
 		const dateArray = this.parseInput(input);
@@ -26,13 +29,15 @@ export class SetBdayCommand extends Command {
 		}
 		const [day, month, year] = dateArray;
 
+		const birthday = new Date(year, month - 1, day);
 		const user = User.create({
 			id: this.message.author.id,
-			birthday: new Date(year, month - 1, day) // month is zero-indexed
+			birthday // month is zero-indexed
 		});
 		await userRepository.save(user);
 
-		const embed = new RichEmbed().setTitle("Birthday Set Successfully").setDescription(`Your birthday has been set successfully.`).setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(58390).setTimestamp();
+		const dateString = birthday.toLocaleDateString("en-US", { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' });
+		const embed = new RichEmbed().setTitle("Birthday Set Successfully").setDescription(`Your birthday has been set to ${dateString}.`).setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(58390).setTimestamp();
 		await this.message.channel.send(embed);
 	}
 
