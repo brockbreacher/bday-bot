@@ -12,7 +12,8 @@ export class HelpCommand extends Command {
 		const embed = new RichEmbed()
 			.setTitle("Help and Commands")
 			.setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL)
-			.setColor(16753919);
+			.setColor(16753919)
+			.setTimestamp();
 
 		for (const command of Object.values(commands)) {
 			embed.addField(`**${prefix}${command.identifier}**`, command.description);
