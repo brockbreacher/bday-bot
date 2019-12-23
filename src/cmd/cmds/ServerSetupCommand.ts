@@ -3,9 +3,9 @@ import { User as DiscordUser, Message, RichEmbed, TextChannel } from "discord.js
 import { Guild } from "../../database/entity";
 import { getRepository } from "typeorm";
 
-export class SetupGuild extends Command {
-	static readonly identifier = "setupguild";
-	static readonly description = "Set up a guild for use with Bday-Bot";
+export class ServerSetupCommand extends Command {
+	static readonly identifier = "serversetup";
+	static readonly description = "Set up this server for Bday-Bot.";
 
 	async run() {
 		const repository = getRepository(Guild);
@@ -15,11 +15,14 @@ export class SetupGuild extends Command {
 			return this.message.channel.send(errorEmbed);
 		}
 
-		const embed = new RichEmbed().setTitle("Announcement Channel").setDescription(`Please enter the channel that you would like me to announce birthdays in.\ne.g. ${this.message.channel} or the channel id: \`${this.message.channel.id}\``).setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753920).setTimestamp();
-		const input = await this.promptMessage(embed, this.message.channel as TextChannel, this.message.author);
+		let input: string | null = this.args[1] ?? null;
 		if (!input) {
-			const errorEmbed = new RichEmbed().setTitle("Prompt timeout").setDescription("You waited too long. Command cancelled!").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
-			return this.message.channel.send(errorEmbed);
+			const embed = new RichEmbed().setTitle("Announcement Channel").setDescription(`Please enter the channel that you would like me to announce birthdays in.\ne.g. ${this.message.channel} or the channel id: \`${this.message.channel.id}\``).setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753920).setTimestamp();
+			input = await this.promptMessage(embed, this.message.channel as TextChannel, this.message.author);
+			if (!input) {
+				const errorEmbed = new RichEmbed().setTitle("Prompt timeout").setDescription("You waited too long. Command cancelled!").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
+				return this.message.channel.send(errorEmbed);
+			}
 		}
 
 		const channelId = this.parseInput(input);
