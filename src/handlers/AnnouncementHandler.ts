@@ -1,4 +1,4 @@
-import { Client, TextChannel } from "discord.js";
+import { Client, RichEmbed, TextChannel } from "discord.js";
 import { setIntervalAtTime } from "../util/Util";
 import { getCustomRepository, getRepository } from "typeorm";
 import { Guild } from "../database/entity";
@@ -14,7 +14,7 @@ export class AnnouncementHandler {
 		setIntervalAtTime(async () => {
 			const now = new Date();
 			console.log(now.getUTCDate(), now.getUTCMonth());
-			const users = await userRepository.findByBirthday(now.getUTCDate(), now.getUTCMonth()+1);
+			const users = await userRepository.findByBirthday(now.getUTCDate(), now.getUTCMonth() + 1);
 
 			for (const user of users) {
 				const guildIds = this.client.guilds
@@ -24,7 +24,8 @@ export class AnnouncementHandler {
 
 				for (const guild of guilds) {
 					const channel = this.client.channels.get(guild.announcementChannel) as TextChannel;
-					await channel.send(`It's <@${user.id}>'s birthday today! Wish them well on their special day.`);
+					const embed = new RichEmbed().setTitle("Happy Birthday").setDescription(`\u{1F389} \u{1F389} It's <@${user.id}>'s birthday today \u{1F389} \u{1F389}\nWish them well on this special day!`).setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753919).setTimestamp();
+					await channel.send(embed);
 				}
 			}
 		}, time);
