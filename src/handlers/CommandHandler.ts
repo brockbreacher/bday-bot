@@ -2,7 +2,6 @@ import { Client, Collection, Message, User } from "discord.js";
 import { CommandFactory } from "../cmd/CommandFactory";
 
 export class CommandHandler {
-	factory = new CommandFactory(this.client);
 	userLock = new Collection<string, User>();
 
 	constructor(readonly client: Client) {}
@@ -11,7 +10,7 @@ export class CommandHandler {
 		if (message.author.bot) return;
 		if (this.userLock.has(message.author.id)) return;
 
-		const command = this.factory.create(message);
+		const command = CommandFactory.create(message);
 		if (command === null) return;
 
 		this.userLock.set(message.author.id, message.author);

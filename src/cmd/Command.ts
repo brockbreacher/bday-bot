@@ -2,10 +2,10 @@ import { Client, Message } from "discord.js";
 
 export abstract class Command {
 	static readonly identifier: string = "invalid-command";
-	readonly identifier = (<typeof Command>this.constructor).identifier;
-
 	static readonly description: string = "Invalid Command";
-	readonly description = (<typeof Command>this.constructor).description;
+
+	get identifier() { return (this.constructor as typeof Command).identifier };
+	get description() { return (this.constructor as typeof Command).description }
 
 	constructor(readonly client: Client, readonly args: string[], readonly message: Message) {}
 
