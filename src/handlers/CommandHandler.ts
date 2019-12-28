@@ -1,5 +1,6 @@
 import { Client, Collection, Message, User } from "discord.js";
 import { CommandFactory } from "../cmd/CommandFactory";
+import { isGuildMessage } from "../util/Util";
 
 export class CommandHandler {
 	userLock = new Collection<string, User>();
@@ -8,6 +9,7 @@ export class CommandHandler {
 
 	async process(message: Message): Promise<void> {
 		if (message.author.bot) return;
+		if (!isGuildMessage(message)) return;
 		if (this.userLock.has(message.author.id)) return;
 
 		const command = CommandFactory.create(message);

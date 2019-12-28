@@ -1,3 +1,6 @@
+import { Message } from "discord.js";
+import { GuildMessage } from "./GuildMessage";
+
 export function setIntervalAtTime(callback: () => void, time: Date) {
 	const now = new Date();
 	time.setUTCFullYear(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
@@ -32,6 +35,9 @@ export function validateDate(day: number, month: number, year: number) {
 	} else {
 		if (day > 28) return false;
 	}
-
 	return true;
+}
+
+export function isGuildMessage(message: Message): message is GuildMessage {
+	return message.channel.type === "text";
 }

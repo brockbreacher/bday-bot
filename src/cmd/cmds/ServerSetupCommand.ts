@@ -1,5 +1,5 @@
-import { Command } from "../Command";
 import { User as DiscordUser, Message, RichEmbed, TextChannel } from "discord.js";
+import { Command } from "../Command";
 import { Guild } from "../../database/entity";
 import { getRepository } from "typeorm";
 
@@ -18,7 +18,7 @@ export class ServerSetupCommand extends Command {
 		let input: string | null = this.args[1] ?? null;
 		if (!input) {
 			const embed = new RichEmbed().setTitle("Announcement Channel").setDescription(`Please enter the channel that you would like me to announce birthdays in.\ne.g. ${this.message.channel} or the channel id: \`${this.message.channel.id}\``).setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(16753920).setTimestamp();
-			input = await this.promptMessage(embed, this.message.channel as TextChannel, this.message.author);
+			input = await this.promptMessage(embed, this.message.channel, this.message.author);
 			if (!input) {
 				const errorEmbed = new RichEmbed().setTitle("Prompt timeout").setDescription("You waited too long. Command cancelled!").setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(14035250).setTimestamp();
 				return this.message.channel.send(errorEmbed);
