@@ -10,7 +10,6 @@ export class PingCommand extends Command {
 		const newMessage = await this.message.channel.send(embed) as Message;
 
 		const pingDelay = newMessage.createdTimestamp - this.message.createdTimestamp;
-		console.log(pingDelay);
 		const editedEmbed = new RichEmbed().setTitle("Pong!").setDescription(`Ping: \`${pingDelay}ms\``).setFooter("Service provided by Bday-Bot", this.client.user.displayAvatarURL).setColor(58390).setTimestamp();
 		await newMessage.edit(editedEmbed);
 	}
