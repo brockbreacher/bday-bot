@@ -1,5 +1,9 @@
 # Changelog
 
+## Unreleased
+- Commands don't work in DM's
+- The bot will send an error message if it can't send embeds.
+
 ## 0.2.0
 - Fix changelog formatting
 - Fix `validateDate`
