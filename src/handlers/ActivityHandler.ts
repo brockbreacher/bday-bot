@@ -1,10 +1,8 @@
 import { Client } from "discord.js";
-import { Activities } from "../activity/Activities";
+import { ThunkedIterator } from "../util/ThunkedIterator";
 
 export class ActivityHandler {
-	readonly activities = new Activities(this.client);
-
-	constructor(readonly client: Client) {}
+	constructor(readonly client: Client, readonly activities: ThunkedIterator<string>) {}
 
 	start(interval: number) {
 		this.client.setInterval(() => {
