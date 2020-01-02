@@ -2,7 +2,8 @@
 
 ## Unreleased
 - Commands don't work in DM's
-- The bot will send an error message if it can't send embeds.
+- Moved to responses pattern(?)
+- Commands reply with embeds if possible otherwise fall back on text
 
 ## 0.2.0
 - Fix changelog formatting
