@@ -18,7 +18,11 @@ export abstract class Command {
 	getResponseContent<T extends ResponseInterface>
 	(responseClass: ResponseClass<T>, ...args: Parameters<T["getText"]>): StringResolvable {
 		const response = this.responseHandler.create(responseClass);
-		return response.getEmbed(...args);
+		if (this.message.channel.permissionsFor(this.client.user)?.has("EMBED_LINKS")) {
+			return response.getEmbed(...args);
+		} else {
+			return response.getText(...args);
+		}
 	}
 
 	async sendResponse<T extends ResponseInterface>
@@ -37,5 +41,4 @@ export abstract class Command {
 	}
 
 }
-
 
