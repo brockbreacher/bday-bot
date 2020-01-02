@@ -29,5 +29,8 @@
     "discord",
     "bot",
     "birthday"
-  ]
+  ],
+  "devDependencies": {
+    "typescript": "^3.7.4"
+  }
 }
