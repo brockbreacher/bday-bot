@@ -1,16 +1,6 @@
 import { Message } from "discord.js";
 import { GuildMessage } from "./GuildMessage";
 
-export function setIntervalAtTime(callback: () => void, time: Date) {
-	const now = new Date();
-	time.setUTCFullYear(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
-	if (time.getTime() < now.getTime()) time.setUTCDate(time.getUTCDate() + 1);
-	setTimeout(() => {
-		setInterval(callback, 24 * 60 * 60 * 1000);
-		callback();
-	}, time.getTime() - now.getTime());
-}
-
 export function validateDate(day: number, month: number, year: number) {
 	// Validate years
 	if (year < 0) return false;

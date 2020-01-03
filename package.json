@@ -12,9 +12,9 @@
     "postinstall": "yarn generate-env"
   },
   "dependencies": {
-    "@types/node": "^12.12.14",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
+    "node-cron": "^2.0.3",
     "pg": "^7.14.0",
     "reflect-metadata": "^0.1.13",
     "typeorm": "^0.2.21"
@@ -31,6 +31,8 @@
     "birthday"
   ],
   "devDependencies": {
+    "@types/node": "^13.1.2",
+    "@types/node-cron": "^2.0.2",
     "typescript": "^3.7.4"
   }
 }
