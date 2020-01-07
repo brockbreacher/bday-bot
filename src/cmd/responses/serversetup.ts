@@ -17,7 +17,7 @@ export class SetupPrompt extends Response {
 
 export class SetupSuccess extends Response {
 	readonly getText = () =>
-		`This server has been setup successfully"`;
+		"This server has been set up successfully";
 	readonly getEmbed = () =>
 		this.embed("Server Set Up Successfully", this.getText(), EmbedColor.GREEN);
 }
