@@ -1,9 +1,9 @@
+import * as moment from "moment";
 import { getCustomRepository } from "typeorm";
 import { UserRepository } from "../../database/repository";
 import { User } from "../../database/entity";
 
 import { Command } from "../Command";
-import { validateDate } from "../../util/Util"
 import { InvalidInput, PromptTimeout } from "../responses/general";
 import { BdayPrompt, BdaySuccess } from "../responses/setbday";
 
@@ -17,13 +17,13 @@ export class SetBdayCommand extends Command {
 		let input = this.args[0] || await this.promptResponse(BdayPrompt);
 		if (!input) return this.sendResponse(PromptTimeout);
 
-		const dateArray = this.parseInput(input);
-		if (!dateArray) return this.sendResponse(InvalidInput);
+		const date = this.parseInput(input);
 
-		const [day, month, year] = dateArray;
+		if (!date) return this.sendResponse(InvalidInput);
+
 		const user = User.create({
 			id: this.message.author.id,
-			birthday: new Date(year, month -1, day) // month is zero-indexed
+			birthday: date.toDate() // month is zero-indexed
 		});
 		await userRepository.save(user);
 
@@ -41,9 +41,9 @@ export class SetBdayCommand extends Command {
 			.match(/^(\d{2})\/(\d{2})\/(\d{4})$/)
 			?.slice(1, 4)
 			.map(x => parseInt(x, 10));
-
 		if (!dateArray) return null;
-		return validateDate(...dateArray as [number, number, number]) ? dateArray : null;
+		const date = moment.utc(dateArray.join("-"), "DD-MM-YYYY");
+		return date.isValid() ? date : null;
 	}
 }
 

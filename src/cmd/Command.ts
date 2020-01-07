@@ -1,7 +1,7 @@
 import { Client, Message, StringResolvable } from "discord.js";
-import { GuildMessage } from "../util/GuildMessage";
-import { ResponseHandler } from "../handlers/ResponseHandler";
 import { ResponseClass, ResponseInterface } from "./Response";
+import { ResponseFactory } from "../factories/ResponseFactory";
+import { GuildMessage } from "../util/Util";
 
 export abstract class Command {
 	get identifier() { return (this.constructor as typeof Command).identifier };
@@ -9,7 +9,7 @@ export abstract class Command {
 	static readonly identifier: string = "invalid-command";
 	static readonly description: string = "Invalid Command";
 
-	readonly responseHandler = new ResponseHandler(this.message);
+	readonly responseFactory = new ResponseFactory(this.message);
 
 	constructor(readonly client: Client, readonly args: string[], readonly message: GuildMessage) {}
 
@@ -17,7 +17,7 @@ export abstract class Command {
 
 	getResponseContent<T extends ResponseInterface>
 	(responseClass: ResponseClass<T>, ...args: Parameters<T["getText"]>): StringResolvable {
-		const response = this.responseHandler.create(responseClass);
+		const response = this.responseFactory.create(responseClass);
 		if (this.message.channel.permissionsFor(this.client.user)?.has("EMBED_LINKS")) {
 			return response.getEmbed(...args);
 		} else {

@@ -1,3 +1,7 @@
+/**
+ * An iterator implementation for (thunks)[https://en.wikipedia.org/wiki/Thunk]
+ * This is especially useful for dynamic user statuses.
+ */
 export class ThunkedIterator<T> {
 	values: Iterator<T>;
 

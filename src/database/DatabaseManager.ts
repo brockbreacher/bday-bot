@@ -3,6 +3,9 @@ import { Connection, createConnection } from "typeorm";
 import { Config } from "../util/Config";
 import * as entities from "./entity";
 
+/**
+ * Database singleton
+ */
 export class DatabaseManager {
 	private static instance: DatabaseManager;
 	private connection: Promise<Connection>;
@@ -28,6 +31,9 @@ export class DatabaseManager {
 		return DatabaseManager.instance;
 	}
 
+	/**
+	 * Gets the connection for the db. This should usually only be run
+	 */
 	public static getConnection(): Promise<Connection> {
 		return DatabaseManager.getInstance().connection;
 	}

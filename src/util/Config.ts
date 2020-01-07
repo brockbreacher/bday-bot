@@ -1,10 +1,14 @@
 import dotenv from "dotenv";
 
+/** All possible config keys **/
 type Configs =
 	"token" | "prefix" | "db_host" |
 	"db_port" | "db_username" |
 	"db_password" | "db_database";
 
+/**
+ * Config [singleton](https://en.wikipedia.org/wiki/Singleton_pattern)
+ */
 export class Config {
 	private static instance: Config;
 	private readonly map: Map<string, string>;
@@ -34,6 +38,10 @@ export class Config {
 		return Config.instance;
 	}
 
+	/**
+	 * Gets a value from the singleton
+	 * @param key
+	 */
 	static getValue(key: Configs): string {
 		return Config.getInstance().map.get(key) ?? "";
 	}

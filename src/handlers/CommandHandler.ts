@@ -1,18 +1,30 @@
-import { Config } from "../util/Config";
-import { Command } from "../cmd/Command";
-import * as commands from "../cmd/cmds";
-import { GuildMessage } from "../util/GuildMessage";
+import { isGuildMessage } from "../util/Util";
+import { Client, Message } from "discord.js";
+import { CommandFactory } from "../factories/CommandFactory";
 
 export class CommandHandler {
-	static create(message: GuildMessage): Command | null {
-		const content = message.content;
-		const prefix = [Config.getValue("prefix"), `${message.client.user}`].find(x => content.startsWith(x));
-		if (!prefix) return null;
+	userLock = new Set<string>();
 
-		const [command, ...args] = content.slice(prefix.length).trim().split(/ +/);
-		const CommandClass = Object.values(commands).find(x => x.identifier === command);
-		if (!CommandClass) return null;
+	constructor(readonly client: Client) {}
 
-		return new CommandClass(message.client, args, message);
+	async process(message: Message): Promise<void> {
+		if (message.author.bot) return;
+		if (!isGuildMessage(message)) return;
+		if (this.userLock.has(message.author.id)) return;
+
+		const command = CommandFactory.create(message);
+		if (!command) return;
+
+		this.userLock.add(message.author.id);
+		console.log(`[${message.author.id}] Running ${command.identifier}!`);
+		try {
+			await command.run();
+			console.log(`[${message.author.id}] Ran ${command.identifier}!`);
+		} catch (e) {
+			console.log(`[${message.author.id}] Error running ${command.identifier}: ${e.stack}`);
+		} finally {
+			this.userLock.delete(message.author.id);
+		}
 	}
+
 }

@@ -1,5 +1,5 @@
 import { Client, RichEmbed, TextChannel } from "discord.js";
-import { setIntervalAtTime } from "../util/Util";
+import { schedule } from "node-cron";
 import { getCustomRepository, getRepository } from "typeorm";
 import { Guild } from "../database/entity";
 import { UserRepository } from "../database/repository";
@@ -7,11 +7,11 @@ import { UserRepository } from "../database/repository";
 export class AnnouncementHandler {
 	constructor(readonly client: Client) {}
 
-	async start(time: Date) {
+	async start() {
 		const userRepository = getCustomRepository(UserRepository);
 		const guildRepository = getRepository(Guild);
 
-		setIntervalAtTime(async () => {
+		schedule("0 0 0 * * *", async ()=> {
 			const now = new Date();
 			console.log(now.getUTCDate(), now.getUTCMonth());
 			const users = await userRepository.findByBirthday(now.getUTCDate(), now.getUTCMonth() + 1);
@@ -28,6 +28,6 @@ export class AnnouncementHandler {
 					await channel.send(embed);
 				}
 			}
-		}, time);
+		}, { timezone: "Etc/UTC" });
 	}
 }
