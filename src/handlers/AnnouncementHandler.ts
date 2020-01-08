@@ -13,7 +13,6 @@ export class AnnouncementHandler {
 
 		schedule("0 0 0 * * *", async ()=> {
 			const now = new Date();
-			console.log(now.getUTCDate(), now.getUTCMonth());
 			const users = await userRepository.findByBirthday(now.getUTCDate(), now.getUTCMonth() + 1);
 
 			for (const user of users) {
