@@ -4,3 +4,4 @@ export { SetBdayCommand } from "./SetBdayCommand";
 export { ServerSetupCommand } from "./ServerSetupCommand";
 export { WelcomeCommand } from "./WelcomeCommand";
 export { AboutCommand } from "./AboutCommand";
+export { SupportCommand } from "./SupportCommand";
