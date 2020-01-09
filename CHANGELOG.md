@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.3.1
+- Added Support command
+- The order of commands in help has been changed a bit
+- Typescript is now installed as a dev dependency
+
 ## 0.3.0
 - Commands don't work in DM's
 - Moved to responses pattern(?)
