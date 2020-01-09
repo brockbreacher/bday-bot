@@ -33,6 +33,7 @@
   ],
   "devDependencies": {
     "@types/node": "^13.1.2",
-    "@types/node-cron": "^2.0.2"
+    "@types/node-cron": "^2.0.2",
+    "typescript": "^3.7.4"
   }
 }
