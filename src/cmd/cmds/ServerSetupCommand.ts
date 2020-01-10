@@ -16,7 +16,7 @@ export class ServerSetupCommand extends Command {
 			this.sendResponse(InvalidPermissions);
 		}
 
-		let input = this.args[1] || await this.promptResponse(SetupPrompt);
+		let input = this.args[0] || await this.promptResponse(SetupPrompt);
 		if (!input) return this.sendResponse(PromptTimeout);
 
 		const channelId = this.parseInput(input);
