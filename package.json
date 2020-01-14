@@ -8,8 +8,7 @@
     "compile": "tsc -p .",
     "execute": "node target/index.js",
     "generate-env": "node bin/generate-env.js",
-    "start": "yarn clean && yarn compile && yarn execute",
-    "postinstall": "yarn generate-env"
+    "start": "yarn clean && yarn compile && yarn execute"
   },
   "dependencies": {
     "dblapi.js": "^2.3.0",
