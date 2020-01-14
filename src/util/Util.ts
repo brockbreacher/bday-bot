@@ -3,9 +3,9 @@ import { User } from "../database/entity";
 import { getCustomRepository } from "typeorm";
 import { UserRepository } from "../database/repository";
 
-const userRepository = getCustomRepository(UserRepository);
 
 export async function setBirthday(userId: string, date: Date) {
+	const userRepository = getCustomRepository(UserRepository);
 	return await userRepository.save(User.create({
 		id: userId,
 		birthday: date
