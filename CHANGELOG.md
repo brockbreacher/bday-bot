@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.2
+- Fix typeorm error
+
 ## 0.4.1
 - Remove postinstall that was crashing `yarn install`yarn 
 
