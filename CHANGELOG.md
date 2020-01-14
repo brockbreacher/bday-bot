@@ -1,5 +1,8 @@
 # Changelog
 
+## 0.4.1
+- Remove postinstall that was crashing `yarn install`yarn 
+
 ## 0.4.0
 - Typo fix
 - Invite command
