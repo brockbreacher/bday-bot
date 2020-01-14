@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.4.0
+- Typo fix
+- Invite command
+- DBL bot list support
+- Switch back to copying .env
+
 ## 0.3.1
 - Added Support command
 - The order of commands in help has been changed a bit
