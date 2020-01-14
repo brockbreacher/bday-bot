@@ -12,6 +12,7 @@
     "postinstall": "yarn generate-env"
   },
   "dependencies": {
+    "dblapi.js": "^2.3.0",
     "discord.js": "^11.5.1",
     "dotenv": "^8.2.0",
     "moment": "^2.24.0",

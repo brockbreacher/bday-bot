@@ -209,6 +209,11 @@ concat-map@0.0.1:
   resolved "https://registry.yarnpkg.com/concat-map/-/concat-map-0.0.1.tgz#d8a96bd77fd68df7793a73036a3ba0d5405d477b"
   integrity sha1-2Klr13/Wjfd5OnMDajug1UBdR3s=
 
+dblapi.js@^2.3.0:
+  version "2.3.0"
+  resolved "https://registry.yarnpkg.com/dblapi.js/-/dblapi.js-2.3.0.tgz#9c600cedc9af0a27c9fd770d85e6c25b71cfa43d"
+  integrity sha512-8uZQMBg1coJsL5SEN1oPj2dgjgfm0DW7FhP8XWnG2V/xcOJnQNM2kCId1g/pyqm8PYH9346olL1IrLJQ6m0wOg==
+
 debug@^4.1.1:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/debug/-/debug-4.1.1.tgz#3b72260255109c6b589cee050f1d516139664791"
