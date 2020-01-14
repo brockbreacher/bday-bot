@@ -1,19 +1,14 @@
 import * as moment from "moment";
-import { getCustomRepository } from "typeorm";
-import { UserRepository } from "../../database/repository";
-import { User } from "../../database/entity";
-
 import { Command } from "../Command";
 import { InvalidInput, PromptTimeout } from "../responses/general";
 import { BdayPrompt, BdaySuccess } from "../responses/setbday";
+import { setBirthday } from "../../util/Util";
 
 export class SetBdayCommand extends Command {
 	static readonly identifier = "setbirthday";
 	static readonly description = "Allows you to set your birthday";
 
 	async run() {
-		const userRepository = getCustomRepository(UserRepository);
-
 		let input = this.args[0] || await this.promptResponse(BdayPrompt);
 		if (!input) return this.sendResponse(PromptTimeout);
 
@@ -21,11 +16,7 @@ export class SetBdayCommand extends Command {
 
 		if (!date) return this.sendResponse(InvalidInput);
 
-		const user = User.create({
-			id: this.message.author.id,
-			birthday: date.toDate() // month is zero-indexed
-		});
-		await userRepository.save(user);
+		const user = await setBirthday(this.message.author.id, date.toDate());
 
 		const dateString = user.birthday.toLocaleDateString("en-US", {
 			weekday: 'long',

@@ -1,11 +1,17 @@
 import { Message, TextChannel } from "discord.js";
+import { User } from "../database/entity";
+import { getCustomRepository } from "typeorm";
+import { UserRepository } from "../database/repository";
 
-/**
- * A simple date validation function.
- * @param day
- * @param month
- * @param year
- */
+const userRepository = getCustomRepository(UserRepository);
+
+export async function setBirthday(userId: string, date: Date) {
+	return await userRepository.save(User.create({
+		id: userId,
+		birthday: date
+	}));
+}
+
 export function validateDate(day: number, month: number, year: number) {
 	// Validate years
 	if (year < 0) return false;
@@ -33,17 +39,10 @@ export function validateDate(day: number, month: number, year: number) {
 	return true;
 }
 
-/**
- * A message that is guaranteed to be sent in a [Guild TextChannel](https://discord.js.org/#/docs/main/stable/class/TextChannel)
- **/
 export interface GuildMessage extends Message {
 	channel: TextChannel;
 }
 
-/**
- * A type guard for a GuildMessage
- * @param message
- */
 export function isGuildMessage(message: Message): message is GuildMessage {
 	return message.channel.type === "text";
 }
