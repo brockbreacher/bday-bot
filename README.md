@@ -1,3 +1,6 @@
+# THIS PROJECT IS PRETTY MUCH ABANDONED AND WILL PROBABLY NOT WORK WITHOUT MAKING YOUR OWN CHANGES TO THE CODE
+
+
 # Bday Bot
 An open source birthday announcer bot for Discord
 
